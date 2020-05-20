@@ -1,8 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Aliments{% endblock %}
-{% block monTitre %}Liste de tous les aliments{% endblock %}
+{% block monTitre %}
+Liste de tous les aliments
+{% if isCalorie %}
+    avec moins de 50 calories
+{% endif %}
+{% endblock %}
 {% block body %}
+<a class="text-info" href="{{ path('alimentsParCalorie',{"calorie":50})}}">Aliments avec moins de 50 calories au 100g </a>
     <div class="row">
         {% for aliment in aliments %}
         <div class="col-12 col-md-6 col-lg-4 col-xl-3">
@@ -11,7 +17,7 @@
                     <img src="{{ asset('images/' ~ aliment.image) }}" class="perso_imgAliment card-img-top" alt="">
                 </div>
                 <div class="card-body">
-                    <h3 class="card-title text-center pb-2 mx-3 border-bottom borer-primary">{{ aliment.nom }}</h3>
+                    <h3 class="card-title text-center pb-2 mx-3 border-bottom border-primary">{{ aliment.nom }}</h3>
                     <p class="card-text">
                         <h4 class="text-center">Prix (Kilo) : {{ aliment.prix }} €</h4>
                         <table class="table text-center">
