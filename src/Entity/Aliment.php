@@ -3,7 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\AlimentRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+
 
 /**
  * @ORM\Entity(repositoryClass=AlimentRepository::class)
@@ -19,36 +21,78 @@ class Aliment
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     * min=3, 
+     * max=15, 
+     * minMessage ="Le nom doit faire {{ limit }} caractères minimum",
+     * maxMessage ="Le nom doit faire moins de {{ limit }} caractères"
+     * )
      */
     private $nom;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Range(
+     * min=0.1, 
+     * max=100, 
+     * minMessage ="Le prix doit être supérieur à {{ limit }}", 
+     * maxMessage ="Le prix doit $etre inférieur à {{ limit }}"
+     * )
      */
     private $prix;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     * min=3, 
+     * max=255, 
+     * minMessage ="Le chemin de l'image doit faire au moins {{ limit }} caractères",
+     * maxMessage ="Le chemin de l'image doit faire au {{ limit }} caractères maximum"
+     * )
      */
     private $image;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(
+     * min=1, 
+     * max=6000, 
+     * minMessage ="La calorie doit être supérieur à {{ limit }}", 
+     * maxMessage ="La calorie doit être inférieur à {{ limit }}"
+     * )
      */
     private $calorie;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Range(
+     * min=0.1, 
+     * max=100, 
+     * minMessage ="La protéine doit être supérieur à {{ limit }}", 
+     * maxMessage ="La protéine doit être inférieur à {{ limit }}"
+     * )
      */
     private $proteine;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Range(
+     * min=0.1, 
+     * max=100, 
+     * minMessage ="Le glucide doit être supérieur à {{ limit }}", 
+     * maxMessage ="Le glucide doit être inférieur à {{ limit }}"
+     * )
      */
     private $glucide;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Range(
+     * min=0.1, 
+     * max=100, 
+     * minMessage ="Le lipide doit être supérieur à {{ limit }}", 
+     * maxMessage ="Le lipide doit être inférieur à {{ limit }}"
+     * )
      */
     private $lipide;
 
