@@ -5,7 +5,6 @@ namespace App\Controller\Admin;
 use App\Entity\Aliment;
 use App\Form\AlimentType;
 use App\Repository\AlimentRepository;
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,8 +38,10 @@ class AdminAlimentController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid())
         {
+            $modif = $aliment->getId() !== null;
             $entityMananger->persist($aliment);
             $entityMananger->flush();
+            $this->addFlash("success", ($modif) ? "la modification a été effectuée" : "L'ajout a été effectuée");
             return $this->redirectToRoute('admin_aliment');
         }
      
@@ -60,6 +61,7 @@ class AdminAlimentController extends AbstractController
         {
             $entityMananger->remove($aliment);
             $entityMananger->flush();
+            $this->addFlash("success", "la suppression a été effectuée");
             return $this->redirectToRoute('admin_aliment');
         }
     }
