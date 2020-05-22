@@ -14,7 +14,7 @@ class AdminTypeController extends AbstractController
     public function index(TypeRepository $repository)
     {
         $types = $repository->findAll();
-        return $this->render('admin_type/adminType.html.twig', [
+        return $this->render('admin/admin_type/adminType.html.twig', [
             "types" => $types
         ]);
     }
