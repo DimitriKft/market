@@ -24,15 +24,23 @@ class AdminTypeController extends AbstractController
     }
 
     /**
-     * @Route("/admin/type/{id}", name="modifType")
+     * @Route("/admin/type/create", name="ajoutType")
+     * @Route("/admin/type/{id}", name="modifType", methods="POST|GET")
      */
-    public function ajoutEtModif(Type $type, Request $request, EntityManagerInterface $entitymanager)
+    public function ajoutEtModif(Type $type = null, Request $request, EntityManagerInterface $entitymanager)
     {
+        if(!$type)
+        {
+            $type = new Type();
+        }
         $form = $this->createForm(TypeType::class, $type);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) 
+        {
+            $modif = $type->getId() !== null;
             $entitymanager->persist($type);
             $entitymanager->flush();
+            $this->addFlash("success", ($modif) ? "la modification a été effectuée" : "L'ajout a été effectuée");
             return $this->redirectToRoute('admin_types');
         }
 
@@ -40,5 +48,19 @@ class AdminTypeController extends AbstractController
             "type" => $type,
             "form" => $form->createView()
         ]);
+    }
+
+     /**
+     * @Route("/admin/type/{id}", name="supType", methods="delete")
+     */
+    public function suppression(Type $type, EntityManagerInterface $entitymanager, Request $request)
+    {
+        if($this->isCsrfTokenValid('SUP'.$type->getId(), $request->get('_token')))
+        {
+            $entitymanager->remove($type);
+            $entitymanager->flush();
+            $this->addFlash("success", "la suppression a été effectuée");
+            return $this->redirectToRoute('admin_types');
+        }
     }
 }
