@@ -11,3 +11,9 @@
     height: 60px;
     /* object-fit: cover; */
 }
+
+.perso_imgType
+{
+    width: 150px;
+    height: 100px;   
+}

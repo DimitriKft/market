@@ -2,18 +2,20 @@
 
 namespace App\Controller;
 
+use App\Repository\TypeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 class TypeController extends AbstractController
 {
     /**
-     * @Route("/type", name="type")
+     * @Route("/types", name="types")
      */
-    public function index()
+    public function index(TypeRepository $repository)
     {
-        return $this->render('type/index.html.twig', [
-            'controller_name' => 'TypeController',
+        $types = $repository->findAll();
+        return $this->render('type/types.html.twig', [
+            "types" => $types
         ]);
     }
 }
