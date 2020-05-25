@@ -20,7 +20,7 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ path('aliments') }}">Aliment</a>
                             <div class="dropdown-divider"></div>
-                            {% if app.user %}
+                            {% if is_granted('ROLE_ADMIN') %}
                                 <a class="dropdown-item" href="{{ path('admin_aliment') }}">Administration</a>  
                             {% endif %}
                         </div>
@@ -30,7 +30,7 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ path('types') }}">Types</a>
                             <div class="dropdown-divider"></div>
-                            {% if app.user %}
+                            {% if is_granted('ROLE_ADMIN') %}
                                 <a class="dropdown-item" href="{{ path('admin_types') }}">Administration</a> 
                             {% endif %}
                         </div>
