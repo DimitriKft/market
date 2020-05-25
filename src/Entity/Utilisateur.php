@@ -2,11 +2,17 @@
 
 namespace App\Entity;
 
-use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UtilisateurRepository;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UtilisateurRepository::class)
+ * @UniqueEntity(
+ * fields={"username"},
+ * message="Ce pseudo existe déja."
+ * )
  */
 class Utilisateur
 {
@@ -19,14 +25,38 @@ class Utilisateur
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     * min=3,
+     * max=10,
+     * minMessage="Il faut plus de {{ limit }} caractères",
+     * maxMessage="Il faut moins de {{ limit }} caractères"
+     *  ) 
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     * min=3,
+     * max=10,
+     * minMessage="Il faut plus de {{ limit }} caractères",
+     * maxMessage="Il faut moins de {{ limit }} caractères"
+     * )
      */
     private $password;
 
+    /** 
+    * @Assert\Length(
+    * min=3,
+    * max=30,
+    * minMessage="Il faut plus de {{ limit }} caractères",
+    * maxMessage="Il faut moins de {{ limit }} caractères"
+    * )
+    * @Assert\EqualTo(
+    * propertyPath="password",
+    * message="Les mdp ne sont pas équivalents"
+    * )
+    */
     private $verificationPassword;
 
     public function getId(): ?int
