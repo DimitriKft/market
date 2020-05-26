@@ -14,7 +14,7 @@
                         <img class="perso_imgType img-fluid" src="{{ asset('images/types/' ~ type.image) }}" alt="">
                     </div>
                     <div class="col">
-                        {{ type.libelle }}
+                            <div><a href="{{ path('afficher_list_aliment_types',{'id':type.id}) }}" class="btn btn-primary">{{ type.libelle }}</a></div>
                     </div>
                 </div>
             </div>
